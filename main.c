@@ -1,4 +1,4 @@
-#include "mainh.h"
+#include "laberinto.h"
 
 int main() {
     printf("Ingrese numero de filas: ");
@@ -6,7 +6,7 @@ int main() {
     printf("Ingrese numero de columnas: ");
     scanf("%d", &COLUMNAS);
 
-    // reservar memoria din·mica
+    // reservar memoria din√°mica
     matriz = malloc(FILAS * sizeof(char *));
     for (int i = 0; i < FILAS; i++)
         matriz[i] = malloc(COLUMNAS * sizeof(char));
@@ -30,7 +30,7 @@ int main() {
                      (end.tv_nsec - start.tv_nsec) / 1e9;
 
     if (len <= 0) {
-        printf("\nNo se encontrÛ camino de E a S.\n");
+        printf("\nNo se encontr√≥ camino de E a S.\n");
     } else {
         printf("\nCamino encontrado (longitud %d). Tiempo de busqueda: %.9f segundos\n\n", len, elapsed);
         imprimir_matriz_con_camino(ruta, len);
@@ -42,3 +42,4 @@ int main() {
 
     return 0;
 }
+
