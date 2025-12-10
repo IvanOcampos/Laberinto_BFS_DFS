@@ -3,7 +3,7 @@
 #include <time.h>
 #include <string.h>
 
-// Variables globales din·micas
+// Variables globales din√°micas
 extern int FILAS;
 extern int COLUMNAS;
 extern char **matriz;
