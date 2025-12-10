@@ -1,4 +1,4 @@
-#include "mainh.h"
+#include "laberinto.h"
 
 int FILAS;
 int COLUMNAS;
@@ -52,7 +52,7 @@ void insertar_entrada_salida() {
     }
 }
 
-// Buscar posición de un caracter
+// Buscar posiciÃ³n de un caracter
 int buscar_pos(char objetivo, Pos *p) {
     for (int i = 0; i < FILAS; i++)
         for (int j = 0; j < COLUMNAS; j++)
@@ -84,7 +84,7 @@ void imprimir_matriz_con_camino(Pos *camino, int len) {
 }
 
 
-// BFS para encontrar camino más corto
+// BFS para encontrar camino mÃ¡s corto
 int encontrar_camino_bfs(Pos ruta[], int max) {
     Pos start, goal;
     if (!buscar_pos('E', &start)) return -1;
@@ -139,3 +139,4 @@ int encontrar_camino_bfs(Pos ruta[], int max) {
 
     return len;
 }
+
