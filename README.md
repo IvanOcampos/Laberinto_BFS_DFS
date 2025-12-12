@@ -1,70 +1,95 @@
-# 🧩 Generador y Solucionador de Laberintos con DFS y BFS en C  
-### *Algoritmos de búsqueda, memoria dinámica y estructuras modulares*
+## 🚀 Laberinto BSF/DFS
 
-Este proyecto implementa un sistema completo para **generar**, **visualizar** y **resolver** laberintos utilizando dos algoritmos fundamentales de teoría de grafos:
-
-- **DFS (Depth-First Search)** → para *generar* el laberinto de forma recursiva.  
-- **BFS (Breadth-First Search)** → para *encontrar el camino más corto* desde la entrada `E` hasta la salida `S`.
-
-El proyecto está completamente desarrollado en **lenguaje C**, con uso de:
-- Recursividad avanzada  
-- Memoria dinámica (`malloc`, `calloc`, `free`)  
-- Modularización en archivos `.c` y `.h`  
-- Medición de tiempos con `clock_gettime()`  
-- Reconstrucción de rutas con padre-hijos (*parent backtracking*)
+Este proyecto implementa un generador de laberintos aleatorios utilizando un algoritmo de **Búsqueda en Profundidad (DFS - Depth-First Search)** para la creación de caminos, y un algoritmo de **Búsqueda en Amplitud (BFS - Breadth-First Search)** para encontrar el camino más corto desde la entrada ('E') hasta la salida ('S').
 
 ---
 
-## 📌 **Características principales**
+## 🎯 Características
 
-✔ Generación automática de laberintos perfectos (sin ciclos redundantes)  
-✔ Búsqueda del camino más corto mediante BFS  
-✔ Imágenes del laberinto con resultados claros  
-✔ Código modular dividido en 3 archivos  
-✔ Manejo completo de memoria dinámica  
-✔ Reconstrucción del camino con impresión final del recorrido  
+* **Generación Aleatoria de Laberintos:** Utiliza un enfoque basado en DFS para asegurar que el laberinto tenga una solución.
+* **Búsqueda del Camino Más Corto:** Implementa el algoritmo BFS para encontrar la ruta más eficiente desde la entrada a la salida.
+* **Medición de Rendimiento:** Mide el tiempo de ejecución del algoritmo BFS para la búsqueda del camino (utilizando `clock_gettime`).
+* **Visualización del Laberinto y el Camino:** Muestra el laberinto generado y, si se encuentra, el camino más corto marcado con puntos (`.`).
 
 ---
 
-## 🧠 **Cómo funciona el programa**
+## 🛠️ Estructura del Proyecto
 
-### 🔹 1. **Generación del laberinto — Algoritmo DFS**
-El laberinto comienza totalmente cubierto por paredes `#`.  
-El algoritmo DFS:
+El proyecto está organizado en los siguientes archivos principales:
 
-1. Selecciona una celda inicial (1,1) donde coloca `E`  
-2. Explora recursivamente direcciones aleatorias  
-3. Rompe paredes avanzando de dos en dos  
-4. Construye pasillos válidos sin dejar ciclos
-
-Esto produce un laberinto tipo *perfect maze*.
+| Archivo | Descripción |
+| :--- | :--- |
+| `main.c` | Contiene la lógica principal: manejo de entrada/salida de filas y columnas, asignación/liberación de memoria, generación de laberinto y llamada a la búsqueda BFS. |
+| `laberinto.c` | Implementa las funciones relacionadas con la manipulación del laberinto: `crear_matriz()`, `imprimir_matriz()`, **`crear_camino()` (DFS)**, `insertar_entrada_salida()`, `buscar_pos()`, `imprimir_matriz_con_camino()`, y **`encontrar_camino_bfs()` (BFS)**. |
+| `laberinto.h` | Archivo de cabecera que define la estructura `Pos`, declara las variables globales (`FILAS`, `COLUMNAS`, `matriz`) y los prototipos de las funciones. |
 
 ---
 
-### 🔹 2. **Inserción automática de entrada y salida**
-El programa coloca:
+## 🖥️ Uso (Compilación y Ejecución)
 
-- Entrada **E** en `(1,1)`  
-- Salida **S** en el borde inferior, buscando la primera celda accesible
+### Requisitos
 
----
+Necesitas un compilador de C (como `gcc`) instalado en tu sistema.
 
-### 🔹 3. **Búsqueda del camino más corto — Algoritmo BFS**
-BFS garantiza:
+### Compilación
 
-✔ El camino más corto en número de movimientos  
-✔ Exploración por capas (niveles)  
-✔ Uso de visitados, cola y matriz `parent`  
+Puedes compilar el proyecto utilizando el siguiente comando en la terminal:
 
-Al encontrar la salida, el camino se reconstruye desde `S → E`.
+```bash
+gcc main.c laberinto.c -o laberinto -lrt
+```
+Nota: Se utiliza la bandera -lrt para enlazar la librería de tiempo real, necesaria para la función clock_gettime().
 
----
+### Ejecución
 
-### 🔹 4. **Medición del rendimiento**
-El tiempo exacto de la búsqueda BFS se obtiene con:
+Ejecuta el programa compilado:
 
-```c
-clock_gettime(CLOCK_MONOTONIC, &start);
-clock_gettime(CLOCK_MONOTONIC, &end);
+```bash
+./laberinto
+```
+El programa te pedirá que ingreses el número de filas y columnas para generar el laberinto.
 
-Mostrando precisión en nanosegundos.
+### Ejemplo de Salida
+```bash
+Ingrese numero de filas: 11
+Ingrese numero de columnas: 21
+Laberinto generado:
+# # # # # # # # # # # # # # # # # # # # #
+# E #           #                       #
+#   #   # # #   # # # # #   #   # # # # #
+#   #       #           #   #           #
+#   # # #   # # # # #   #   # # # # #   #
+#           #       #   #   #           #
+# # # # # # #   #   #   # # #   # # #   #
+#               #   #       #       #   #
+#   # # # # # # # # # # #   # # #   #   #
+#                                   # S #
+# # # # # # # # # # # # # # # # # # # # #
+
+Camino encontrado (longitud 51). Tiempo de busqueda: 0.000042100 segundos
+
+# # # # # # # # # # # # # # # # # # # # #
+# E # . . . . . #                       #
+# . # . # # # . # # # # #   #   # # # # #
+# . # . . . # . . . . . #   #           #
+# . # # # . # # # # # . #   # # # # #   #
+# . . . . . #       # . #   # . . . . . #
+# # # # # # #   #   # . # # # . # # # . #
+#               #   # . . . # . . . # . #
+#   # # # # # # # # # # # . # # # . # . #
+#                         . . . . . # S #
+# # # # # # # # # # # # # # # # # # # # #
+
+Process returned 0 (0x0)   execution time : 2.061 s
+Press any key to continue.
+```
+
+## ⚙️ Algoritmos Clave
+
+### Generación de Laberinto (DFS)
+
+La función `crear_camino` utiliza un algoritmo de **Búsqueda en Profundidad (DFS)** recursivo. Comienza en un punto, borra las paredes a posiciones adyacentes no visitadas (con un salto de 2 para asegurar el grosor de las paredes) y luego llama recursivamente a la función para continuar el camino. 
+
+### Búsqueda del Camino Más Corto (BFS)
+
+La función `encontrar_camino_bfs` utiliza la **Búsqueda en Amplitud (BFS)**. Este algoritmo explora el laberinto capa por capa desde la entrada. Utiliza una **cola**, una matriz `visited` y una matriz `parent` para reconstruir la ruta más corta una vez que se encuentra la salida.
